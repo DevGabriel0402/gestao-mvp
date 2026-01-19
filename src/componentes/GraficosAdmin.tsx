@@ -111,7 +111,7 @@ export function GraficosAdmin() {
                                 <XAxis dataKey="mes" tick={{ fontSize: 12 }} />
                                 <YAxis />
                                 <Tooltip />
-                                <Line type="monotone" dataKey="quantidade" name="Matrículas" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                                <Line type="monotone" dataKey="quantidade" name="Matrículas" stroke="#38bdf8" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>

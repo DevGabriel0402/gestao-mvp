@@ -8,6 +8,16 @@ interface jsPDFWithAutoTable extends jsPDF {
     lastAutoTable: { finalY: number }
 }
 
+// Função auxiliar para CamelCase
+function toCamelCase(str: string) {
+    if (!str) return '-'
+    return str
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+}
+
 export function gerarRelatorioProfessores(usuarios: UsuarioSistema[]) {
     const doc = new jsPDF() as jsPDFWithAutoTable
 
@@ -19,10 +29,10 @@ export function gerarRelatorioProfessores(usuarios: UsuarioSistema[]) {
 
     // Dados da Tabela
     const dados = usuarios.map(u => [
-        u.nome,
-        u.email,
-        u.papel.toUpperCase(),
-        u.projeto || '-',
+        toCamelCase(u.nome),
+        u.email, // Email mantém minúsculo geralmente
+        toCamelCase(u.papel),
+        toCamelCase(u.projeto || '-'),
         u.ativo ? 'Ativo' : 'Inativo'
     ])
 
@@ -37,7 +47,13 @@ export function gerarRelatorioProfessores(usuarios: UsuarioSistema[]) {
     })
 
     // Salvar
-    doc.save(`relatorio_professores_${new Date().toISOString().split('T')[0]}.pdf`)
+    // Salvar (Compatibilidade Mobile PWA)
+    // doc.save() as vezes falha em PWAs (iOS principalmente).
+    // Melhor abrir em nova janela para o usuário salvar/compartilhar.
+    const blob = doc.output('blob')
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank')
+    // doc.save(`relatorio_professores_${new Date().toISOString().split('T')[0]}.pdf`)
 }
 
 export function gerarRelatorioAlunos(alunos: Aluno[]) {
@@ -69,11 +85,11 @@ export function gerarRelatorioAlunos(alunos: Aluno[]) {
         }
 
         return [
-            aluno.nomeCompleto,
+            toCamelCase(aluno.nomeCompleto),
             idade,
-            aluno.responsavel?.nomeCompleto || '-',
+            toCamelCase(aluno.responsavel?.nomeCompleto || '-'),
             aluno.responsavel?.telefoneWhatsApp || '-',
-            oficina
+            toCamelCase(oficina)
         ]
     })
 
@@ -87,5 +103,9 @@ export function gerarRelatorioAlunos(alunos: Aluno[]) {
     })
 
     // Salvar
-    doc.save(`relatorio_alunos_${new Date().toISOString().split('T')[0]}.pdf`)
+    // Salvar
+    const blob = doc.output('blob')
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank')
+    // doc.save(`relatorio_alunos_${new Date().toISOString().split('T')[0]}.pdf`)
 }

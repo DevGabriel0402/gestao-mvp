@@ -24,10 +24,29 @@ export async function obterEstatisticasGlobais(): Promise<EstatisticasGlobais> {
     const snapProfessores = await getCountFromServer(collection(banco, 'usuarios'))
     const totalProfessores = snapProfessores.data().count
 
-    // 2. Buscar Todos Alunos
-    const alunosQuery = query(collectionGroup(banco, 'alunos'))
-    const snapAlunos = await getDocs(alunosQuery)
-    const alunos = snapAlunos.docs.map(d => ({ ...d.data(), criadoEm: d.data().criadoEm })) as any[]
+    // 2. Buscar Todos Alunos (Global)
+    let alunos: any[] = []
+
+    try {
+        // Tentativa Otimizada: Collection Group
+        // Se falhar (falta de índice), cai no catch
+        const alunosQuery = query(collectionGroup(banco, 'alunos'))
+        const snapAlunos = await getDocs(alunosQuery)
+        alunos = snapAlunos.docs.map(d => ({ ...d.data(), criadoEm: d.data().criadoEm }))
+    } catch (error) {
+        console.warn('CollectionGroup falhou (provavelmente falta índice), usando fallback iterativo:', error)
+
+        // Fallback: Iterar Usuários -> Alunos
+        // Como tempos o snapProfessores, podemos iterar
+        const snapUsuarios = await getDocs(collection(banco, 'usuarios'))
+        const promises = snapUsuarios.docs.map(async (uDoc) => {
+            const subRef = collection(banco, 'usuarios', uDoc.id, 'alunos')
+            const subSnap = await getDocs(subRef)
+            return subSnap.docs.map(d => ({ ...d.data(), criadoEm: d.data().criadoEm }))
+        })
+        const resultados = await Promise.all(promises)
+        alunos = resultados.flat()
+    }
 
     // 3. Ranking de Oficinas (Barra)
     const oficinasMap: Record<string, number> = {}
