@@ -415,7 +415,7 @@ export function CadastroAluno() {
                                                 render={({ field }) => (
                                                     <Input
                                                         {...field}
-                                                        onChange={(e: any) => field.onChange(e.detail.value)}
+                                                        onChange={(e: any) => field.onChange(e.detail?.value ?? (e.target as any)?.value)}
                                                     />
                                                 )}
                                             />
