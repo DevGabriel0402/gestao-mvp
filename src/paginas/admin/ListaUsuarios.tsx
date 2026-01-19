@@ -109,6 +109,11 @@ export function ListaUsuarios() {
                                 </div>
                                 <div style={{ fontSize: 13, color: '#64748b' }}>
                                     {u.email} • <strong style={{ textTransform: 'capitalize' }}>{u.papel}</strong>
+                                    {u.projeto && (
+                                        <span style={{ marginLeft: 8, fontSize: 12, background: '#f1f5f9', padding: '2px 8px', borderRadius: 12, color: '#475569' }}>
+                                            {u.projeto}
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             <Botao $variacao="neutro" onClick={() => navegar(`/admin/usuarios/${u.uid}/editar`)}>

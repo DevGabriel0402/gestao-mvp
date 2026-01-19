@@ -78,6 +78,19 @@ export function PainelUsuario() {
                 </div>
             </div>
 
+            {usuarioSistema?.papel === 'administrador' && (
+                <div style={{ marginTop: 16 }}>
+                    <Botao
+                        $variacao="secundario"
+                        onClick={() => navegar('/admin')}
+                        style={{ background: '#334155', color: '#fff', border: 'none' }}
+                    >
+                        <FiSettings style={{ marginRight: 8 }} />
+                        Voltar ao Painel Admin
+                    </Botao>
+                </div>
+            )}
+
             <Linha>
                 <Card style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app/alunos')}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -145,6 +158,6 @@ export function PainelUsuario() {
                     </div>
                 </Card>
             </Linha>
-        </ContainerPagina>
+        </ContainerPagina >
     )
 }

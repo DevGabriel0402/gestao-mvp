@@ -19,8 +19,8 @@ import type { PapelUsuario } from '../../servicos/usuarios_admin.servico'
 
 import { MdSportsVolleyball } from 'react-icons/md'
 import { IoIosFootball } from 'react-icons/io'
-import { FaBasketballBall, FaSwimmer } from 'react-icons/fa'
-import { GiHand } from 'react-icons/gi'
+import { FaBasketballBall, FaSwimmer, FaPaintBrush, FaLaptop } from 'react-icons/fa'
+import { GiHand, GiMusicalNotes } from 'react-icons/gi'
 
 export function CriarUsuario() {
     const navegar = useNavigate()
@@ -129,6 +129,9 @@ export function CriarUsuario() {
                                 { value: 'Basquete', label: <><FaBasketballBall size={18} /> Basquete</> },
                                 { value: 'Handebol', label: <><GiHand size={18} /> Handebol</> },
                                 { value: 'Natação', label: <><FaSwimmer size={18} /> Natação</> },
+                                { value: 'Dança', label: <><GiMusicalNotes size={18} /> Dança</> },
+                                { value: 'Artesanato', label: <><FaPaintBrush size={18} /> Artesanato</> },
+                                { value: 'Informática', label: <><FaLaptop size={18} /> Informática</> },
                                 { value: 'Outro', label: 'Outro' }
                             ]}
                             placeholder="Selecione a modalidade..."
