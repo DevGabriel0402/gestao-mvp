@@ -7,7 +7,7 @@ admin.initializeApp({
 
 async function main() {
     const uid = process.argv[2];
-    const papel = process.argv[3]; // administrador | usuario
+    const papel = process.argv[3];
 
     if (!uid) throw new Error("Passe o UID. Ex: node definir-claims.cjs <UID> administrador");
     if (!papel) throw new Error("Passe o papel. Ex: node definir-claims.cjs <UID> administrador");
