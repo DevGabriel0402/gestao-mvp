@@ -63,7 +63,7 @@ const LinkEsqueci = styled.a`
 
 export function Login() {
     const navegar = useNavigate()
-    const { usuarioSistema } = usarAutenticacao()
+    const { usuarioSistema, carregando: carregandoAuth } = usarAutenticacao()
 
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
@@ -71,13 +71,20 @@ export function Login() {
     const [carregando, setCarregando] = useState(false)
 
     useEffect(() => {
+        // Se temos usuário, redireciona
         if (usuarioSistema) {
+            toast.success('Bem-vindo de volta!')
             const destino = usuarioSistema.papel === 'administrador'
                 ? '/admin'
                 : '/app'
             navegar(destino, { replace: true })
         }
-    }, [usuarioSistema, navegar])
+        // Se terminou de carregar o auth global, não tem usuário, mas estavamos tentando logar
+        else if (!carregandoAuth && !usuarioSistema && carregando) {
+            setCarregando(false)
+            // O hook usarAutenticacao já exibe o toast de erro específico (inativo, não encontrado, etc)
+        }
+    }, [usuarioSistema, carregandoAuth, navegar, carregando])
 
     async function aoEntrar(e: React.FormEvent) {
         e.preventDefault()
@@ -85,8 +92,7 @@ export function Login() {
 
         try {
             await entrarComEmailESenha(email, senha)
-            // A navegação acontece automaticamente pelo useEffect acima
-            toast.success('Bem-vindo de volta!')
+            // Não fazemos nada aqui, esperamos o useEffect reagir à mudança de usuarioSistema
         } catch (err: any) {
             console.error(err)
             toast.error('Credenciais inválidas. Tente novamente.')
