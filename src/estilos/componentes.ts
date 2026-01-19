@@ -76,6 +76,13 @@ export const GrupoCampo = styled.div<{ theme: TipoTema }>`
   }
 `
 
+export const Grid = styled.div<{ theme: TipoTema }>`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: ${({ theme }) => theme.espacamento.lg};
+  margin-top: ${({ theme }) => theme.espacamento.lg};
+`
+
 export const Rotulo = styled.label <{ theme: TipoTema }>`
   color: ${({ theme }) => theme.cores.textoFraco};
   font-size: 13px;

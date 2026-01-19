@@ -24,8 +24,10 @@ O **Gestão MVP** é uma plataforma web completa para administração de projeto
 - **Personalização**: O administrador pode definir quais oficinas e níveis estão disponíveis no sistema.
 - **Arraste e Solte (Drag & Drop)**: Interface intuitiva para reordenar listas de oficinas e níveis.
 
+
 ### 📊 Relatórios
 - **Visualização de Dados**: Gráficos e indicadores sobre a distribuição de alunos por oficina.
+- **Relatórios PDF**: Geração de listas de professores e alunos em formato PDF para impressão ou arquivamento.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -38,11 +40,11 @@ O **Gestão MVP** é uma plataforma web completa para administração de projeto
 - [React Icons](https://react-icons.github.io/react-icons/) (Ícones)
 - [Recharts](https://recharts.org/) (Gráficos)
 - [Dnd Kit](https://dndkit.com/) (Drag and Drop)
+- [jsPDF](https://github.com/parallax/jsPDF) (Geração de PDF)
 
 **Backend & Infraestrutura (Serverless):**
 - [Firebase Authentication](https://firebase.google.com/docs/auth)
 - [Cloud Firestore](https://firebase.google.com/docs/firestore) (Banco de dados NoSQL)
-- [Cloud Functions for Firebase](https://firebase.google.com/docs/functions) (Backend Logic)
 - [Firebase Hosting](https://firebase.google.com/docs/hosting)
 
 ## 🚀 Como Executar o Projeto

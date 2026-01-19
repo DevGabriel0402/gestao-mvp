@@ -56,6 +56,8 @@ export type DadosAlunoSalvar = {
     observacoes?: string
 }
 
+export type Aluno = DadosAlunoSalvar & { id: string }
+
 function caminhoAlunos(uid: string) {
     return collection(banco, 'usuarios', uid, 'alunos')
 }

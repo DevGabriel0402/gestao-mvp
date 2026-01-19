@@ -1,4 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom'
+import { useState } from 'react'
 import styled from 'styled-components'
 import {
     Card,
@@ -10,9 +11,14 @@ import {
 } from '../estilos/componentes'
 import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi'
 import { MdOutlineSportsVolleyball } from 'react-icons/md'
+import { FaFilePdf } from 'react-icons/fa6'
 import { usarAutenticacao } from '../hooks/usarAutenticacao'
 import { usarConfiguracoesGeraisUsuario } from '../hooks/usarConfiguracoesGeraisUsuario'
 import { sair } from '../servicos/autenticacao.servico'
+import { listarAlunos } from '../servicos/alunos.servico'
+import type { Aluno } from '../servicos/alunos.servico'
+import { gerarRelatorioAlunos } from '../servicos/relatorios.servico'
+import { toast } from 'react-toastify'
 
 const DesktopOnly = styled.div`
   display: block;
@@ -32,10 +38,26 @@ export function PainelUsuario() {
     const navegar = useNavigate()
     const { usuarioSistema } = usarAutenticacao()
     const { projetoNome, contatoSuporte } = usarConfiguracoesGeraisUsuario(usuarioSistema?.uid)
+    const [gerandoRelatorio, setGerandoRelatorio] = useState(false)
 
     async function fazerLogout() {
         await sair()
         navegar('/login', { replace: true })
+    }
+
+    async function baixarRelatorioAlunos() {
+        if (!usuarioSistema?.uid) return
+        setGerandoRelatorio(true)
+        try {
+            const alunos = await listarAlunos(usuarioSistema.uid) as Aluno[]
+            gerarRelatorioAlunos(alunos)
+            toast.success('Relatório de alunos gerado!')
+        } catch (error) {
+            console.error(error)
+            toast.error('Erro ao gerar relatório.')
+        } finally {
+            setGerandoRelatorio(false)
+        }
     }
 
     return (
@@ -154,6 +176,56 @@ export function PainelUsuario() {
                         <div>
                             <Titulo style={{ fontSize: 18 }}>Geral</Titulo>
                             <Subtitulo>Níveis e dados do projeto</Subtitulo>
+                        </div>
+                    </div>
+                </Card>
+
+                <Card
+                    style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                    onClick={!gerandoRelatorio ? baixarRelatorioAlunos : undefined}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{
+                            background: '#fee2e2',
+                            color: '#dc2626',
+                            width: 56,
+                            height: 56,
+                            borderRadius: 12,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 28
+                        }}>
+                            <FaFilePdf />
+                        </div>
+                        <div>
+                            <Titulo style={{ fontSize: 18 }}>Relatório</Titulo>
+                            <Subtitulo>{gerandoRelatorio ? 'Gerando...' : 'Baixar PDF de Alunos'}</Subtitulo>
+                        </div>
+                    </div>
+                </Card>
+
+                <Card
+                    style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                    onClick={baixarRelatorioAlunos}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{
+                            background: '#fee2e2',
+                            color: '#dc2626',
+                            width: 56,
+                            height: 56,
+                            borderRadius: 12,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 28
+                        }}>
+                            <FaFilePdf />
+                        </div>
+                        <div>
+                            <Titulo style={{ fontSize: 18 }}>Relatório</Titulo>
+                            <Subtitulo>{gerandoRelatorio ? 'Gerando PDF...' : 'Baixar lista de alunos'}</Subtitulo>
                         </div>
                     </div>
                 </Card>
