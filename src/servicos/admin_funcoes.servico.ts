@@ -1,6 +1,8 @@
 import { getFunctions, httpsCallable } from 'firebase/functions'
 import { app as appFirebase } from './firebase'
 
+const funcoes = getFunctions(appFirebase, 'us-central1')
+
 export async function criarUsuarioSistema(dados: {
     email: string
     senha: string
@@ -8,7 +10,6 @@ export async function criarUsuarioSistema(dados: {
     papel: 'administrador' | 'usuario'
     ativo?: boolean
 }) {
-    const funcoes = getFunctions(appFirebase)
     const call = httpsCallable(funcoes, 'criarUsuarioSistema')
     const res: any = await call(dados)
     return res.data as { uid: string }
@@ -21,7 +22,6 @@ export async function atualizarUsuarioSistema(dados: {
     papel?: 'administrador' | 'usuario'
     ativo?: boolean
 }) {
-    const funcoes = getFunctions(appFirebase)
     const call = httpsCallable(funcoes, 'atualizarUsuarioSistema')
     const res: any = await call(dados)
     return res.data as { ok: true }
