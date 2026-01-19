@@ -1,73 +1,103 @@
-# React + TypeScript + Vite
+# Gestão MVP 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O **Gestão MVP** é uma plataforma web completa para administração de projetos sociais, focada na gestão de alunos, oficinas, e controle administrativo. Desenvolvido com tecnologias modernas, oferece uma experiência de usuário fluida, segura e responsiva.
 
-Currently, two official plugins are available:
+## 📋 Funcionalidades Principais
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🔒 Autenticação e Segurança
+- **Login Seguro**: Autenticação via Email/Senha utilizando Firebase Auth.
+- **Controle de Acesso (RBAC)**: Diferenciação clara entre **Administradores** e **Usuários** comuns.
+- **Proteção de Rotas**: Redirecionamento inteligente baseado em permissões.
+- **Recuperação de Senha**: Fluxo automatizado de redefinição de senha via e-mail.
 
-## React Compiler
+### 👥 Gestão de Usuários (Painel Admin)
+- **Dashboard Administrativo**: Visão geral com atalhos rápidos.
+- **CRUD de Usuários**: Criação, Listagem, Edição e Bloqueio de usuários.
+- **Criação Automatizada**: Criação de contas de sistema com sincronização automática entre Auth e Database via Cloud Functions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🎓 Gestão de Alunos e Oficinas
+- **Cadastro Completo**: Registro detalhado de alunos com dados pessoais e de contato.
+- **Matrícula em Oficinas**: Associação de alunos a atividades (ex: Vôlei, Futsal, Dança).
+- **Lista de Chamada**: (Em desenvolvimento) Controle de frequência.
 
-## Expanding the ESLint configuration
+### ⚙️ Configurações Dinâmicas
+- **Personalização**: O administrador pode definir quais oficinas e níveis estão disponíveis no sistema.
+- **Arraste e Solte (Drag & Drop)**: Interface intuitiva para reordenar listas de oficinas e níveis.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 📊 Relatórios
+- **Visualização de Dados**: Gráficos e indicadores sobre a distribuição de alunos por oficina.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tecnologias Utilizadas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Frontend:**
+- [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Styled Components](https://styled-components.com/) (Estilização)
+- [React Router DOM](https://reactrouter.com/) (Navegação)
+- [React Toastify](https://fkhadra.github.io/react-toastify/) (Notificações)
+- [React Icons](https://react-icons.github.io/react-icons/) (Ícones)
+- [Recharts](https://recharts.org/) (Gráficos)
+- [Dnd Kit](https://dndkit.com/) (Drag and Drop)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Backend & Infraestrutura (Serverless):**
+- [Firebase Authentication](https://firebase.google.com/docs/auth)
+- [Cloud Firestore](https://firebase.google.com/docs/firestore) (Banco de dados NoSQL)
+- [Cloud Functions for Firebase](https://firebase.google.com/docs/functions) (Backend Logic)
+- [Firebase Hosting](https://firebase.google.com/docs/hosting)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Como Executar o Projeto
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Pré-requisitos
+- Node.js (v18 ou superior)
+- npm ou yarn
+- Conta no Google Firebase
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Passos para Instalação
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/DevGabriel0402/gestao-mvp.git
+   cd gestao-mvp
+   ```
+
+2. **Instale as dependências**
+   ```bash
+   npm install
+   ```
+
+3. **Configure o Firebase**
+   - Crie um projeto no [Console do Firebase](https://console.firebase.google.com/).
+   - Crie um app Web e copie as configurações (`apiKey`, `authDomain`, etc).
+   - Cole as configurações no arquivo `src/servicos/firebase.ts`.
+
+4. **Execute localmente**
+   ```bash
+   npm run dev
+   ```
+   O projeto estará rodando em `http://localhost:5173`.
+
+## ☁️ Cloud Functions (Backend)
+
+O backend do sistema reside na pasta `/functions`. Para fazer o deploy das funções:
+
+1. Entre na pasta:
+   ```bash
+   cd functions
+   npm install
+   ```
+2. Faça o deploy (necessário ter o `firebase-tools` instalado globalmente):
+   ```bash
+   firebase deploy --only functions
+   ```
+
+## 🔐 Regras e Permissões
+
+O sistema utiliza Custom Claims para definir o papel do usuário (`administrador` ou `usuario`). As regras de segurança do Firestore (`firestore.rules`) garantem que apenas administradores possam gerenciar usuários do sistema, enquanto usuários comuns gerenciam apenas os dados dos alunos.
+
+## 📱 PWA (Progressive Web App)
+
+O projeto inclui um manifesto web (`manifest.json`) e ícones configurados, permitindo que seja instalado como um aplicativo nativo em dispositivos móveis e desktop.
+
+---
+
+Desenvolvido com 💙 por [Gabriel](https://github.com/DevGabriel0402)
