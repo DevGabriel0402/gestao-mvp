@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { BarraNavegacaoMobile } from '../../componentes/BarraNavegacaoMobile'
-import { FiUsers } from 'react-icons/fi'
+import { FiUsers, FiHome } from 'react-icons/fi'
 import { MdOutlineSportsVolleyball } from 'react-icons/md'
 import { FaFilePdf } from 'react-icons/fa6'
 import { gerarRelatorioProfessores } from '../../servicos/relatorios.servico'
@@ -30,7 +30,8 @@ export function LayoutAdmin() {
         <>
             <Outlet />
             <BarraNavegacaoMobile itens={[
-                { label: 'Professores', icone: FiUsers, acao: '/admin/usuarios', caminhoAtivo: '/admin' }, // '/admin' tbm ativa este? Talvez
+                { label: 'Início', icone: FiHome, acao: '/admin' },
+                { label: 'Professores', icone: FiUsers, acao: '/admin/usuarios' },
                 { label: 'Visão App', icone: MdOutlineSportsVolleyball, acao: '/app' },
                 { label: 'Relatório', icone: FaFilePdf, acao: baixarRelatorio }
             ]} />

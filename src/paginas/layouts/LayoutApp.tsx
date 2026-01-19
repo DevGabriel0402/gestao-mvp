@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { BarraNavegacaoMobile } from '../../componentes/BarraNavegacaoMobile'
-import { FiUser, FiSettings } from 'react-icons/fi'
+import { FiUser, FiSettings, FiHome } from 'react-icons/fi'
 import { MdOutlineSportsVolleyball } from 'react-icons/md'
 import { FaFilePdf } from 'react-icons/fa6'
 import { gerarRelatorioAlunos } from '../../servicos/relatorios.servico'
@@ -50,6 +50,7 @@ export function LayoutApp() {
         <>
             <Outlet />
             <BarraNavegacaoMobile itens={[
+                { label: 'Início', icone: FiHome, acao: '/app' },
                 { label: 'Alunos', icone: FiUser, acao: '/app/alunos' },
                 { label: 'Oficinas', icone: MdOutlineSportsVolleyball, acao: '/app/configuracoes/oficinas' },
                 { label: 'Geral', icone: FiSettings, acao: '/app/configuracoes/geral' },
