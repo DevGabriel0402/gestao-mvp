@@ -19,6 +19,7 @@ import { listarAlunos } from '../servicos/alunos.servico'
 import type { Aluno } from '../servicos/alunos.servico'
 import { gerarRelatorioAlunos } from '../servicos/relatorios.servico'
 import { toast } from 'react-toastify'
+import { GraficosProfessor } from '../componentes/GraficosProfessor'
 
 const DesktopOnly = styled.div`
   display: block;
@@ -207,6 +208,8 @@ export function PainelUsuario() {
 
 
             </Linha>
+
+            <GraficosProfessor />
         </ContainerPagina >
     )
 }

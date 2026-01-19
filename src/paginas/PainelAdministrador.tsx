@@ -19,6 +19,7 @@ import { gerarRelatorioProfessores } from '../servicos/relatorios.servico'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
 import { MdOutlineSportsVolleyball } from 'react-icons/md'
+import { GraficosAdmin } from '../componentes/GraficosAdmin'
 
 export function PainelAdministrador() {
     const navegar = useNavigate()
@@ -54,6 +55,8 @@ export function PainelAdministrador() {
                     <FiLogOut /> Sair
                 </Botao>
             </div>
+
+            <GraficosAdmin />
 
             <Grid>
                 <Card style={{ cursor: 'pointer', display: 'flex', gap: 16, alignItems: 'center' }} onClick={() => navegar('/admin/usuarios')}>
