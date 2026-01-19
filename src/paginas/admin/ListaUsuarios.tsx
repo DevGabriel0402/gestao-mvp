@@ -75,7 +75,7 @@ export function ListaUsuarios() {
                             onChange={(v) => setFiltroPapel(v)}
                             options={[
                                 { value: 'todos', label: 'Todos' },
-                                { value: 'usuario', label: 'Professor(a)' },
+                                { value: 'professor', label: 'Professor(a)' },
                                 { value: 'administrador', label: 'Administrador' }
                             ]}
                             placeholder="Papel..."

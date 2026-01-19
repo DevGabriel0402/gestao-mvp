@@ -15,8 +15,7 @@ import {
 } from '../../estilos/componentes'
 import { DropdownSelect } from '../../componentes/DropdownSelect'
 import { criarOuAtualizarUsuarioSistema } from '../../servicos/usuarios_admin.servico'
-
-type PapelUsuario = 'administrador' | 'usuario'
+import type { PapelUsuario } from '../../servicos/usuarios_admin.servico'
 
 export function CriarUsuario() {
     const navegar = useNavigate()
@@ -26,7 +25,7 @@ export function CriarUsuario() {
     const [uid, setUid] = useState('')
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-    const [papel, setPapel] = useState<PapelUsuario>('usuario')
+    const [papel, setPapel] = useState<PapelUsuario>('professor')
     const [ativo, setAtivo] = useState(true)
 
     async function salvar() {
@@ -104,7 +103,7 @@ export function CriarUsuario() {
                         value={papel}
                         onChange={(v) => setPapel(v as PapelUsuario)}
                         options={[
-                            { value: 'usuario', label: 'Professor(a)' },
+                            { value: 'professor', label: 'Professor(a)' },
                             { value: 'administrador', label: 'Administrador' }
                         ]}
                         placeholder="Selecione o papel..."

@@ -28,7 +28,7 @@ export function EditarUsuario() {
     // Form
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-    const [papel, setPapel] = useState<PapelUsuario>('usuario')
+    const [papel, setPapel] = useState<PapelUsuario>('professor')
     const [ativo, setAtivo] = useState(true)
 
     useEffect(() => {
@@ -123,7 +123,7 @@ export function EditarUsuario() {
                         value={papel}
                         onChange={(v) => setPapel(v as PapelUsuario)}
                         options={[
-                            { value: 'usuario', label: 'Professor(a)' },
+                            { value: 'professor', label: 'Professor(a)' },
                             { value: 'administrador', label: 'Administrador' }
                         ]}
                     />

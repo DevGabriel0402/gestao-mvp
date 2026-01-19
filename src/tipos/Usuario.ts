@@ -1,4 +1,4 @@
-export type PapelUsuario = 'administrador' | 'usuario'
+export type PapelUsuario = 'administrador' | 'professor'
 
 export type UsuarioSistema = {
     uid: string

@@ -62,7 +62,7 @@ export function Rotas() {
             <Route
                 path="/app"
                 element={
-                    <RotaProtegida papeisPermitidos={['usuario', 'administrador']}>
+                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
                         <PainelUsuario />
                     </RotaProtegida>
                 }
@@ -71,7 +71,7 @@ export function Rotas() {
             <Route
                 path="/app/alunos/novo"
                 element={
-                    <RotaProtegida papeisPermitidos={['usuario', 'administrador']}>
+                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
                         <CadastroAluno />
                     </RotaProtegida>
                 }
@@ -80,7 +80,7 @@ export function Rotas() {
             <Route
                 path="/app/alunos/:id/editar"
                 element={
-                    <RotaProtegida papeisPermitidos={['usuario', 'administrador']}>
+                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
                         <CadastroAluno />
                     </RotaProtegida>
                 }
@@ -88,7 +88,7 @@ export function Rotas() {
             <Route
                 path="/app/alunos"
                 element={
-                    <RotaProtegida papeisPermitidos={['usuario', 'administrador']}>
+                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
                         <ListaAlunos />
                     </RotaProtegida>
                 }
@@ -97,7 +97,7 @@ export function Rotas() {
             <Route
                 path="/app/relatorios/oficinas"
                 element={
-                    <RotaProtegida papeisPermitidos={['usuario', 'administrador']}>
+                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
                         <RelatorioOficinas />
                     </RotaProtegida>
                 }
@@ -107,7 +107,7 @@ export function Rotas() {
             <Route
                 path="/app/configuracoes/geral"
                 element={
-                    <RotaProtegida papeisPermitidos={['usuario', 'administrador']}>
+                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
                         <ConfiguracoesGerais />
                     </RotaProtegida>
                 }
@@ -116,7 +116,7 @@ export function Rotas() {
             <Route
                 path="/app/configuracoes/oficinas"
                 element={
-                    <RotaProtegida papeisPermitidos={['usuario', 'administrador']}>
+                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
                         <ConfiguracoesOficinas />
                     </RotaProtegida>
                 }
