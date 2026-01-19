@@ -79,7 +79,7 @@ export function PainelUsuario() {
             </div>
 
             {usuarioSistema?.papel === 'administrador' && (
-                <div style={{ marginTop: 16 }}>
+                <div style={{ marginTop: 16, marginBottom: 20 }}>
                     <Botao
                         $variacao="secundario"
                         onClick={() => navegar('/admin')}
