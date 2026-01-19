@@ -73,7 +73,7 @@ export function Login() {
     useEffect(() => {
         // Se temos usuário, redireciona
         if (usuarioSistema) {
-            toast.success('Bem-vindo de volta!')
+            // Toast de boas-vindas removido para evitar duplicação em redirects
             const destino = usuarioSistema.papel === 'administrador'
                 ? '/admin'
                 : '/app'

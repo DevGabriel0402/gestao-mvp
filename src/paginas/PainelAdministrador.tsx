@@ -62,7 +62,7 @@ export function PainelAdministrador() {
                             <FiLayout />
                         </div>
                         <div>
-                            <div style={{ fontSize: 18, fontWeight: 600, color: '#1e293b' }}>Acessar como Usuário</div>
+                            <div style={{ fontSize: 18, fontWeight: 600, color: '#1e293b' }}>Acessar como Professor</div>
                             <div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>
                                 Vá para o painel do aplicativo para gerenciar seus próprios alunos.
                             </div>

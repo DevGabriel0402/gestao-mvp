@@ -17,7 +17,9 @@ export function RotaProtegida({
     if (!usuarioSistema) return <Navigate to="/login" replace />
 
     if (papeisPermitidos && !papeisPermitidos.includes(usuarioSistema.papel)) {
-        // Redirecionamento inteligente se o usuário não tiver permissão
+        // Redirecionamento inteligente:
+        // Se for admin tentando acessar rota de outro papel não permitido -> Admin
+        // Se for professor/outro -> App
         const destino = usuarioSistema.papel === 'administrador'
             ? '/admin'
             : '/app'
