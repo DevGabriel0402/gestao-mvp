@@ -13,7 +13,7 @@ const ContainerBarra = styled.div`
     right: 0;
     background: #ffffff;
     border-top: 1px solid #e2e8f0;
-    height: 64px;
+    height: 84px;
     z-index: 1000;
     justify-content: space-around;
     padding-bottom: env(safe-area-inset-bottom); // iOS safe area
@@ -25,7 +25,7 @@ const Spacer = styled.div`
   display: none;
   @media (max-width: 768px) {
     display: block;
-    height: 80px; // 64 + padding
+    height: 105px; // 84 + padding
   }
 `
 
@@ -48,11 +48,11 @@ const ItemNavegacao = styled.button<{ $ativo?: boolean }>`
   }
 
   svg {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   span {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 500;
   }
 `
