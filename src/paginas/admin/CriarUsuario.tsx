@@ -14,7 +14,7 @@ import {
     Titulo
 } from '../../estilos/componentes'
 import { DropdownSelect } from '../../componentes/DropdownSelect'
-import { criarUsuarioSistema } from '../../servicos/admin_funcoes.servico'
+import { criarOuAtualizarUsuarioSistema } from '../../servicos/usuarios_admin.servico'
 
 type PapelUsuario = 'administrador' | 'usuario'
 
@@ -23,29 +23,23 @@ export function CriarUsuario() {
     const [salvando, setSalvando] = useState(false)
 
     // Form
+    const [uid, setUid] = useState('')
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
     const [papel, setPapel] = useState<PapelUsuario>('usuario')
     const [ativo, setAtivo] = useState(true)
 
     async function salvar() {
-        if (!nome || !email || !senha) {
-            toast.warn('Preencha Nome, Email e Senha')
-            return
-        }
-
-        if (senha.length < 6) {
-            toast.warn('A senha deve ter pelo menos 6 caracteres')
+        if (!uid || !nome || !email) {
+            toast.warn('Preencha UID, Nome e Email')
             return
         }
 
         setSalvando(true)
         try {
-            await criarUsuarioSistema({
+            await criarOuAtualizarUsuarioSistema(uid, {
                 nome,
                 email,
-                senha,
                 papel,
                 ativo
             })
@@ -72,8 +66,18 @@ export function CriarUsuario() {
                 <Titulo style={{ marginBottom: 20 }}>Novo Usuário</Titulo>
 
                 <div style={{ background: '#e0f2fe', padding: 12, borderRadius: 8, fontSize: 13, color: '#0369a1', marginBottom: 20 }}>
-                    Preencha os dados abaixo. O sistema criará o acesso de login e o perfil automaticamente.
+                    <strong>Atenção:</strong> O login deve ser criado manualmente no <strong>Firebase Authentication</strong>.
+                    Copie o <strong>UID</strong> gerado lá e cole abaixo para criar o perfil no sistema.
                 </div>
+
+                <GrupoCampo style={{ marginBottom: 16 }}>
+                    <Rotulo>UID (do Firebase Auth)</Rotulo>
+                    <CampoBase
+                        value={uid}
+                        onChange={(e) => setUid(e.target.value)}
+                        placeholder="Ex: 5XyZw..."
+                    />
+                </GrupoCampo>
 
                 <GrupoCampo style={{ marginBottom: 16 }}>
                     <Rotulo>Nome Completo</Rotulo>
@@ -85,22 +89,12 @@ export function CriarUsuario() {
                 </GrupoCampo>
 
                 <GrupoCampo style={{ marginBottom: 16 }}>
-                    <Rotulo>E-mail (Login)</Rotulo>
+                    <Rotulo>E-mail (Apenas referência)</Rotulo>
                     <CampoBase
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         placeholder="Ex: joao@email.com"
-                    />
-                </GrupoCampo>
-
-                <GrupoCampo style={{ marginBottom: 16 }}>
-                    <Rotulo>Senha</Rotulo>
-                    <CampoBase
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
-                        type="password"
-                        placeholder="Mínimo 6 caracteres"
                     />
                 </GrupoCampo>
 

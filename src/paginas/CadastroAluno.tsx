@@ -32,7 +32,6 @@ import { Carregando } from '../componentes/layout/Carregando'
 import { Input } from 'smart-webcomponents-react/input'
 import { MaskedTextBox } from 'smart-webcomponents-react/maskedtextbox'
 import { TextArea } from 'smart-webcomponents-react/textarea'
-import { DateInput } from 'smart-webcomponents-react/dateinput'
 import { DropdownSelect } from '../componentes/DropdownSelect'
 
 type Etapa = 1 | 2 | 3
@@ -74,7 +73,7 @@ export function CadastroAluno() {
         mode: 'onChange'
     })
 
-    const { carregando: carregandoDados, oficinas, niveis } = usarDadosCadastroAluno()
+    const { oficinas, niveis } = usarDadosCadastroAluno()
 
     const dataNascimento = watch('dataNascimento')
     const naoSabeCEP = watch('endereco.naoSabeCEP')
@@ -432,7 +431,7 @@ export function CadastroAluno() {
                                                 name="responsavel.parentesco"
                                                 render={({ field }) => (
                                                     <DropdownSelect
-                                                        value={field.value}
+                                                        value={field.value || ''}
                                                         onChange={(v) => field.onChange(v)}
                                                         options={["Pai", "Mãe", "Tutor", "Outro"].map(v => ({ label: v, value: v }))}
                                                         placeholder="Selecione..."

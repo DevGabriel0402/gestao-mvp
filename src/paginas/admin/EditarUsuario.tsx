@@ -10,7 +10,6 @@ import {
     GrupoCampo,
     CampoBase,
     Rotulo,
-    SelectBase,
     BotaoVoltar,
     Titulo
 } from '../../estilos/componentes'

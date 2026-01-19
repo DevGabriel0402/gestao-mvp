@@ -1,11 +1,9 @@
 import { FiPlus, FiUsers, FiLayout } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { Botao, Card, ContainerPagina } from '../estilos/componentes'
-import { usarAutenticacao } from '../hooks/usarAutenticacao'
 import { TopoPainelAdmin } from './admin/TopoPainelAdmin'
 
 export function PainelAdministrador() {
-    const { usuarioSistema } = usarAutenticacao()
 
     return (
         <ContainerPagina>

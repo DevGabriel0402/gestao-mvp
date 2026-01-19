@@ -5,63 +5,64 @@ service cloud.firestore {
     /* =========================
        FUNÇÕES AUXILIARES
     ========================== */
+
     function estaLogado() {
       return request.auth != null;
     }
 
-    // Helper para ler dados do usuário do DB (se claims falharem ou para compatibilidade)
-    function dadosUsuario() {
+    // Le o doc do usuário atual para verificar permissões
+    // ATENÇÃO: Isso custa 1 leitura adicional por requisição
+    function getUsuarioAtual() {
       return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
     }
 
-    function usuarioAtivo() {
-      return estaLogado() && dadosUsuario().ativo == true;
+    function usuarioExiste() {
+      return exists(/databases/$(database)/documents/usuarios/$(request.auth.uid));
     }
 
-    // Verifica se é admin (via Claim OU via DB)
-    // Verifica se é admin (via Claim OU via DB)
     function ehAdmin() {
-      return usuarioAtivo() && (
-        (request.auth.token.keys().hasAll(['papel']) && request.auth.token.papel == "administrador") || 
-        dadosUsuario().papel == "administrador"
-      );
+      return estaLogado() && 
+             usuarioExiste() && 
+             getUsuarioAtual().papel == 'administrador' && 
+             getUsuarioAtual().ativo == true;
+    }
+
+    function ehUsuarioAtivo() {
+      return estaLogado() && 
+             usuarioExiste() && 
+             getUsuarioAtual().ativo == true;
     }
 
     /* =========================
        USUÁRIOS (DOC PRINCIPAL)
+       /usuarios/{uid}
     ========================== */
     match /usuarios/{uid} {
-      // Admin lê lista de usuários (para gestão)
-      // Usuário lê apenas o próprio perfil
-      allow read: if ehAdmin() || (estaLogado() && uid == request.auth.uid);
+      // 1) Admin pode ler/escrever qualquer usuário
+      // 2) O próprio usuário pode ler seu doc (mesmo se inativo, para saber que está bloqueado)
+      // 3) Ninguém mais pode ler
+      allow read: if (estaLogado() && request.auth.uid == uid) || ehAdmin();
 
-      // Apenas admin cria/atualiza/deleta usuários (via Client SDK se permitido, mas idealmente é via Admin SDK)
-      // Como estamos usando Admin SDK nas Cloud Functions, essas regras de write aqui são para segurança extra
-      // caso tentemos escrever direto do front (ex: editar perfil próprio).
-      allow create, update, delete: if ehAdmin();
+      // Escrita apenas Admin (o usuário não edita seu próprio papel/status)
+      allow write: if ehAdmin();
 
       /* =========================
-         SUBCOLEÇÕES DO USUÁRIO
-         - oficinas
-         - configuracoes
-         - alunos
+         SUBCOLEÇÕES (oficinas, configuracoes, alunos, etc)
       ========================== */
-      match /{subcolecao}/{docId} {
-        // Leitura: Admin pode ler tudo (para relatórios/gestão)
-        // Usuário lê o seu
-        allow read: if ehAdmin() || (estaLogado() && uid == request.auth.uid);
+      match /{document=**} {
+        // Admin lê e escreve tudo
+        allow read, write: if ehAdmin();
 
-        // Escrita:
-        // - Admin pode tudo (se precisar corrigir algo)
-        // - Usuário pode escrever nas suas subcoleções (alunos, etc)
-        allow create, update: if ehAdmin() || (
-           estaLogado() && uid == request.auth.uid && 
-           (subcolecao == "alunos" || subcolecao == "oficinas" || subcolecao == "configuracoes")
-        );
-
-        // Delete: Admin ou o próprio usuário (ex: deletar aluno)
-        allow delete: if ehAdmin() || (estaLogado() && uid == request.auth.uid && subcolecao == "alunos");
+        // Usuário (Se ativo) lê e escreve nas SUAS subcoleções
+        allow read, write: if ehUsuarioAtivo() && request.auth.uid == uid;
       }
     }
+
+    /* =========================
+       BLOQUEIO DE COLEÇÕES GLOBAIS ANTIGAS
+    ========================== */
+    match /alunos/{document=**} { allow read, write: if false; }
+    match /oficinas/{document=**} { allow read, write: if false; }
+    match /configuracoes/{document=**} { allow read, write: if false; }
   }
 }

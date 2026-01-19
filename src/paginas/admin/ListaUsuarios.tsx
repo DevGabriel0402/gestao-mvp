@@ -14,7 +14,6 @@ import {
 import { DropdownSelect } from '../../componentes/DropdownSelect'
 import { listarUsuariosSistema } from '../../servicos/usuarios_admin.servico'
 import type { UsuarioSistema } from '../../servicos/usuarios_admin.servico'
-import { Skeleton } from '../../componentes/Skeleton'
 import { Carregando } from '../../componentes/Carregando'
 import { EstadoVazio } from '../../componentes/EstadoVazio'
 

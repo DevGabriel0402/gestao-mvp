@@ -72,7 +72,7 @@ export function Login() {
 
     useEffect(() => {
         if (usuarioSistema) {
-            const destino = usuarioSistema.papel === 'administrador' || usuarioSistema.papel === 'staff'
+            const destino = usuarioSistema.papel === 'administrador'
                 ? '/admin'
                 : '/app'
             navegar(destino, { replace: true })
