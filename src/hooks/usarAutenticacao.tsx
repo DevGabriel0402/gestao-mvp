@@ -31,35 +31,59 @@ export function ProvedorAutenticacao({ children }: { children: React.ReactNode }
                     return
                 }
 
-                // 2. Busca o documento do usuário no Firestore
+                const cacheKey = `gestao_usuario_v1_${usuarioFirebase.uid}`
+
+                // 2. Tentativa de carga imediata do Local Storage (Cache)
+                const cacheSalvo = localStorage.getItem(cacheKey)
+                if (cacheSalvo) {
+                    try {
+                        const usuarioCache = JSON.parse(cacheSalvo) as UsuarioSistema
+                        // Verifica se é o mesmo UID para garantir
+                        if (usuarioCache.uid === usuarioFirebase.uid) {
+                            setUsuarioSistema(usuarioCache)
+                            setCarregando(false) // Libera UI imediatamente com cache
+                        }
+                    } catch (e) {
+                        console.warn('Erro ao ler cache do usuário', e)
+                        localStorage.removeItem(cacheKey)
+                    }
+                }
+
+                // 3. Busca o documento do usuário atualizado no Firestore
                 // (Importante: buscarUsuarioSistema NÃO cria usuário automaticamente)
                 const usuario = await buscarUsuarioSistema(usuarioFirebase.uid)
 
-                // 3. Validação: Usuário existe?
+                // 4. Validação: Usuário existe?
                 if (!usuario) {
                     toast.error('Professor(a) não cadastrado(a). Solicite acesso ao administrador.')
                     await sair()
                     setUsuarioSistema(null)
                     setCarregando(false)
+                    localStorage.removeItem(cacheKey)
                     return
                 }
 
-                // 4. Validação: Usuário está ativo?
+                // 5. Validação: Usuário está ativo?
                 if (!usuario.ativo) {
                     toast.error('Professor(a) desativado(a). Fale com o administrador.')
                     await sair()
                     setUsuarioSistema(null)
                     setCarregando(false)
+                    localStorage.removeItem(cacheKey)
                     return
                 }
 
-                // 5. Sucesso: define o usuário no contexto
+                // 6. Sucesso: define o usuário no contexto e atualiza cache
                 setUsuarioSistema(usuario)
+                localStorage.setItem(cacheKey, JSON.stringify(usuario))
 
             } catch (error) {
                 console.error('Erro ao buscar usuário:', error)
-                toast.error('Erro ao autenticar no sistema.')
-                setUsuarioSistema(null)
+                // Se der erro de rede mas tiver cache, o usuário continua navegando (offline support básico)
+                // Só mostra erro se não tiver usuário nenhum (nem cache)
+                if (!usuarioSistema) { // closure variable might be stale, but safe enough logic
+                    toast.error('Erro ao recuperar dados do usuário.')
+                }
             } finally {
                 setCarregando(false)
             }

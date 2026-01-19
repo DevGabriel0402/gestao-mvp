@@ -6,4 +6,5 @@ export type UsuarioSistema = {
     email: string
     papel: PapelUsuario
     ativo: boolean
+    projeto?: string // Ex: 'Vôlei', 'Futsal'
 }

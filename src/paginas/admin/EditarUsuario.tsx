@@ -18,6 +18,11 @@ import { Carregando } from '../../componentes/Carregando'
 import { buscarUsuarioSistema, atualizarUsuarioSistema } from '../../servicos/usuarios_admin.servico'
 import type { PapelUsuario } from '../../servicos/usuarios_admin.servico'
 
+import { MdSportsVolleyball } from 'react-icons/md'
+import { IoIosFootball } from 'react-icons/io'
+import { FaBasketballBall, FaSwimmer } from 'react-icons/fa'
+import { GiHand } from 'react-icons/gi'
+
 export function EditarUsuario() {
     const { uid } = useParams()
     const navegar = useNavigate()
@@ -29,6 +34,7 @@ export function EditarUsuario() {
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [papel, setPapel] = useState<PapelUsuario>('professor')
+    const [projeto, setProjeto] = useState('')
     const [ativo, setAtivo] = useState(true)
 
     useEffect(() => {
@@ -43,6 +49,7 @@ export function EditarUsuario() {
                 setNome(u.nome)
                 setEmail(u.email)
                 setPapel(u.papel)
+                setProjeto(u.projeto || '')
                 setAtivo(u.ativo)
             } else {
                 toast.error('Professor(a) não encontrado')
@@ -69,6 +76,7 @@ export function EditarUsuario() {
                 nome,
                 email,
                 papel,
+                projeto: papel === 'professor' ? projeto : undefined,
                 ativo
             })
             toast.success('Professor(a) atualizado com sucesso!')
@@ -128,6 +136,25 @@ export function EditarUsuario() {
                         ]}
                     />
                 </GrupoCampo>
+
+                {papel === 'professor' && (
+                    <GrupoCampo>
+                        <Rotulo>Projeto / Oficina Principal</Rotulo>
+                        <DropdownSelect
+                            value={projeto}
+                            onChange={(v) => setProjeto(v)}
+                            options={[
+                                { value: 'Vôlei', label: <><MdSportsVolleyball size={18} /> Vôlei</> },
+                                { value: 'Futsal', label: <><IoIosFootball size={18} /> Futsal</> },
+                                { value: 'Basquete', label: <><FaBasketballBall size={18} /> Basquete</> },
+                                { value: 'Handebol', label: <><GiHand size={18} /> Handebol</> },
+                                { value: 'Natação', label: <><FaSwimmer size={18} /> Natação</> },
+                                { value: 'Outro', label: 'Outro' }
+                            ]}
+                            placeholder="Selecione a modalidade..."
+                        />
+                    </GrupoCampo>
+                )}
 
                 <GrupoCampo>
                     <Rotulo>Status</Rotulo>

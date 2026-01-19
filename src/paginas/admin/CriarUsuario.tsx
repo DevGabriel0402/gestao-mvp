@@ -17,6 +17,11 @@ import { DropdownSelect } from '../../componentes/DropdownSelect'
 import { criarOuAtualizarUsuarioSistema } from '../../servicos/usuarios_admin.servico'
 import type { PapelUsuario } from '../../servicos/usuarios_admin.servico'
 
+import { MdSportsVolleyball } from 'react-icons/md'
+import { IoIosFootball } from 'react-icons/io'
+import { FaBasketballBall, FaSwimmer } from 'react-icons/fa'
+import { GiHand } from 'react-icons/gi'
+
 export function CriarUsuario() {
     const navegar = useNavigate()
     const [salvando, setSalvando] = useState(false)
@@ -26,6 +31,7 @@ export function CriarUsuario() {
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [papel, setPapel] = useState<PapelUsuario>('professor')
+    const [projeto, setProjeto] = useState('')
     const [ativo, setAtivo] = useState(true)
 
     async function salvar() {
@@ -40,6 +46,7 @@ export function CriarUsuario() {
                 nome,
                 email,
                 papel,
+                projeto: papel === 'professor' ? projeto : undefined,
                 ativo
             })
             toast.success('Professor(a) criado com sucesso!')
@@ -109,6 +116,25 @@ export function CriarUsuario() {
                         placeholder="Selecione o papel..."
                     />
                 </GrupoCampo>
+
+                {papel === 'professor' && (
+                    <GrupoCampo style={{ marginBottom: 16 }}>
+                        <Rotulo>Projeto / Oficina Principal</Rotulo>
+                        <DropdownSelect
+                            value={projeto}
+                            onChange={(v) => setProjeto(v)}
+                            options={[
+                                { value: 'Vôlei', label: <><MdSportsVolleyball size={18} /> Vôlei</> },
+                                { value: 'Futsal', label: <><IoIosFootball size={18} /> Futsal</> },
+                                { value: 'Basquete', label: <><FaBasketballBall size={18} /> Basquete</> },
+                                { value: 'Handebol', label: <><GiHand size={18} /> Handebol</> },
+                                { value: 'Natação', label: <><FaSwimmer size={18} /> Natação</> },
+                                { value: 'Outro', label: 'Outro' }
+                            ]}
+                            placeholder="Selecione a modalidade..."
+                        />
+                    </GrupoCampo>
+                )}
 
                 <GrupoCampo style={{ marginBottom: 16 }}>
                     <Rotulo>Status</Rotulo>

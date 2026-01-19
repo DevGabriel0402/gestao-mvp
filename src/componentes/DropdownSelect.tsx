@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { FiChevronDown } from 'react-icons/fi'
 
 type Opcao = {
-    label: string
+    label: React.ReactNode
     value: string
 }
 
@@ -52,9 +52,9 @@ export function DropdownSelect({ value, onChange, options, placeholder }: Props)
                     minHeight: '42px' // Altura para alinhar com inputs
                 }}
             >
-                <span style={{ color: value ? '#334155' : '#94a3b8' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: value ? '#334155' : '#94a3b8' }}>
                     {opcaoSelecionada?.label || placeholder || 'Selecione...'}
-                </span>
+                </div>
                 <FiChevronDown style={{ opacity: 0.5 }} />
             </button>
 
