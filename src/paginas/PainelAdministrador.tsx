@@ -59,8 +59,6 @@ export function PainelAdministrador() {
                 </Botao>
             </div>
 
-            <GraficosAdmin />
-
             <GridDeNavegacao>
                 <Card style={{ cursor: 'pointer', minHeight: 160, display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/admin/usuarios')}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -128,6 +126,8 @@ export function PainelAdministrador() {
                     </div>
                 </Card>
             </GridDeNavegacao>
+
+            <GraficosAdmin />
         </ContainerPagina>
     )
 }
