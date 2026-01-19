@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import {
     FiUsers,
     FiLogOut,
-    FiUserPlus
+
 } from 'react-icons/fi'
 import { FaFilePdf } from 'react-icons/fa6'
 import {
@@ -70,19 +70,7 @@ export function PainelAdministrador() {
                     </div>
                 </Card>
 
-                <Card style={{ cursor: 'pointer', display: 'flex', gap: 16, alignItems: 'center' }} onClick={() => navegar('/admin/usuarios/novo')}>
-                    <div style={{
-                        width: 50, height: 50, borderRadius: 12,
-                        background: '#dcfce7', color: '#16a34a',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24
-                    }}>
-                        <FiUserPlus />
-                    </div>
-                    <div>
-                        <Titulo style={{ fontSize: 18 }}>Novo Professor</Titulo>
-                        <Subtitulo>Cadastrar acesso</Subtitulo>
-                    </div>
-                </Card>
+
 
                 <Card
                     style={{ cursor: gerandoRelatorio ? 'wait' : 'pointer', display: 'flex', gap: 16, alignItems: 'center' }}

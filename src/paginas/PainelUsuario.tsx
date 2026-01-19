@@ -205,30 +205,7 @@ export function PainelUsuario() {
                     </div>
                 </Card>
 
-                <Card
-                    style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-                    onClick={baixarRelatorioAlunos}
-                >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{
-                            background: '#fee2e2',
-                            color: '#dc2626',
-                            width: 56,
-                            height: 56,
-                            borderRadius: 12,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 28
-                        }}>
-                            <FaFilePdf />
-                        </div>
-                        <div>
-                            <Titulo style={{ fontSize: 18 }}>Relatório</Titulo>
-                            <Subtitulo>{gerandoRelatorio ? 'Gerando PDF...' : 'Baixar lista de alunos'}</Subtitulo>
-                        </div>
-                    </div>
-                </Card>
+
             </Linha>
         </ContainerPagina >
     )
