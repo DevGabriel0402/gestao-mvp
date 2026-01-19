@@ -70,7 +70,19 @@ export function PainelAdministrador() {
                     </div>
                 </Card>
 
-
+                <Card style={{ cursor: 'pointer', display: 'flex', gap: 16, alignItems: 'center' }} onClick={() => navegar('/app')}>
+                    <div style={{
+                        width: 50, height: 50, borderRadius: 12,
+                        background: '#f1f5f9', color: '#64748b',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24
+                    }}>
+                        <MdOutlineSportsVolleyball />
+                    </div>
+                    <div>
+                        <Titulo style={{ fontSize: 18 }}>Visão do Professor</Titulo>
+                        <Subtitulo>Acessar painel do app</Subtitulo>
+                    </div>
+                </Card>
 
                 <Card
                     style={{ cursor: gerandoRelatorio ? 'wait' : 'pointer', display: 'flex', gap: 16, alignItems: 'center' }}
@@ -86,20 +98,6 @@ export function PainelAdministrador() {
                     <div>
                         <Titulo style={{ fontSize: 18 }}>Relatório PDF</Titulo>
                         <Subtitulo>{gerandoRelatorio ? 'Gerando...' : 'Baixar lista de professores'}</Subtitulo>
-                    </div>
-                </Card>
-
-                <Card style={{ cursor: 'pointer', display: 'flex', gap: 16, alignItems: 'center' }} onClick={() => navegar('/app')}>
-                    <div style={{
-                        width: 50, height: 50, borderRadius: 12,
-                        background: '#f1f5f9', color: '#64748b',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24
-                    }}>
-                        <MdOutlineSportsVolleyball />
-                    </div>
-                    <div>
-                        <Titulo style={{ fontSize: 18 }}>Visão do Professor</Titulo>
-                        <Subtitulo>Acessar painel do app</Subtitulo>
                     </div>
                 </Card>
             </Grid>
