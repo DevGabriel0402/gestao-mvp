@@ -20,6 +20,7 @@ import type { Aluno } from '../servicos/alunos.servico'
 import { gerarRelatorioAlunos } from '../servicos/relatorios.servico'
 import { toast } from 'react-toastify'
 import { GraficosProfessor } from '../componentes/GraficosProfessor'
+import { BarraNavegacaoMobile } from '../componentes/BarraNavegacaoMobile'
 
 const DesktopOnly = styled.div`
   display: block;
@@ -210,6 +211,13 @@ export function PainelUsuario() {
             </Linha>
 
             <GraficosProfessor />
+
+            <BarraNavegacaoMobile itens={[
+                { label: 'Meus Alunos', icone: FiUser, acao: '/app/alunos' },
+                { label: 'Oficinas', icone: MdOutlineSportsVolleyball, acao: '/app/configuracoes/oficinas' },
+                { label: 'Geral', icone: FiSettings, acao: '/app/configuracoes/geral' },
+                { label: 'Relatório', icone: FaFilePdf, acao: baixarRelatorioAlunos }
+            ]} />
         </ContainerPagina >
     )
 }

@@ -20,6 +20,7 @@ import { toast } from 'react-toastify'
 import { useState } from 'react'
 import { MdOutlineSportsVolleyball } from 'react-icons/md'
 import { GraficosAdmin } from '../componentes/GraficosAdmin'
+import { BarraNavegacaoMobile } from '../componentes/BarraNavegacaoMobile'
 
 export function PainelAdministrador() {
     const navegar = useNavigate()
@@ -104,6 +105,11 @@ export function PainelAdministrador() {
                     </div>
                 </Card>
             </Grid>
-        </ContainerPagina>
+            <BarraNavegacaoMobile itens={[
+                { label: 'Professores', icone: FiUsers, acao: '/admin/usuarios' },
+                { label: 'Visão App', icone: MdOutlineSportsVolleyball, acao: '/app' },
+                { label: 'Relatório', icone: FaFilePdf, acao: baixarRelatorioProfessores }
+            ]} />
+        </ContainerPagina >
     )
 }
