@@ -8,16 +8,25 @@ const ContainerBarra = styled.div`
   @media (max-width: 768px) {
     display: flex;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    border-top: 1px solid #e2e8f0;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    left: 20px;
+    right: 20px;
+    
+    // Glassmorphism
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    
+    // Shape
+    border-radius: 24px;
     height: 84px;
     z-index: 1000;
+    
+    // Layout
     justify-content: space-around;
-    padding-bottom: env(safe-area-inset-bottom); // iOS safe area
-    box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+    align-items: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 `
 
