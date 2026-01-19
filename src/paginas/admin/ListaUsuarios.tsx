@@ -63,7 +63,7 @@ export function ListaUsuarios() {
                     <div style={{ position: 'relative', flex: 1 }}>
                         <FiSearch style={{ position: 'absolute', left: 12, top: 14, color: '#94a3b8' }} />
                         <CampoBase
-                            placeholder="Buscar por nome ou email..."
+                            placeholder="Buscar professor..."
                             style={{ paddingLeft: 38 }}
                             value={busca}
                             onChange={(e) => setBusca(e.target.value)}
@@ -74,8 +74,8 @@ export function ListaUsuarios() {
                             value={filtroPapel}
                             onChange={(v) => setFiltroPapel(v)}
                             options={[
-                                { value: 'todos', label: 'Todos papéis' },
-                                { value: 'usuario', label: 'Usuário' },
+                                { value: 'todos', label: 'Todos' },
+                                { value: 'usuario', label: 'Professor(a)' },
                                 { value: 'administrador', label: 'Administrador' }
                             ]}
                             placeholder="Papel..."
@@ -84,7 +84,7 @@ export function ListaUsuarios() {
                 </div>
                 <Link to="/admin/usuarios/novo">
                     <Botao $variacao="primario">
-                        <FiPlus /> Novo Usuário
+                        <FiPlus /> Novo Professor(a)
                     </Botao>
                 </Link>
             </Linha>
@@ -95,7 +95,7 @@ export function ListaUsuarios() {
                 </div>
             ) : usuariosFiltrados.length === 0 ? (
                 <EstadoVazio
-                    titulo="Nenhum usuário encontrado"
+                    titulo="Nenhum professor encontrado"
                     descricao="Tente ajustar os filtros de busca."
                 />
             ) : (

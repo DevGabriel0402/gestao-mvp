@@ -43,11 +43,11 @@ export function CriarUsuario() {
                 papel,
                 ativo
             })
-            toast.success('Usuário criado com sucesso!')
+            toast.success('Professor(a) criado com sucesso!')
             navegar('/admin/usuarios')
         } catch (e: any) {
             console.error(e)
-            const erroMsg = e.message || 'Erro ao criar usuário'
+            const erroMsg = e.message || 'Erro ao criar professor(a)'
             toast.error(`Erro: ${erroMsg}`)
         } finally {
             setSalvando(false)
@@ -63,7 +63,7 @@ export function CriarUsuario() {
             </BotaoVoltar>
 
             <Card style={{ marginTop: 10 }}>
-                <Titulo style={{ marginBottom: 20 }}>Novo Usuário</Titulo>
+                <Titulo style={{ marginBottom: 20 }}>Novo Professor(a)</Titulo>
 
                 <div style={{ background: '#e0f2fe', padding: 12, borderRadius: 8, fontSize: 13, color: '#0369a1', marginBottom: 20 }}>
                     <strong>Atenção:</strong> O login deve ser criado manualmente no <strong>Firebase Authentication</strong>.
@@ -104,7 +104,7 @@ export function CriarUsuario() {
                         value={papel}
                         onChange={(v) => setPapel(v as PapelUsuario)}
                         options={[
-                            { value: 'usuario', label: 'Usuário' },
+                            { value: 'usuario', label: 'Professor(a)' },
                             { value: 'administrador', label: 'Administrador' }
                         ]}
                         placeholder="Selecione o papel..."
@@ -125,7 +125,7 @@ export function CriarUsuario() {
 
                 <div style={{ marginTop: 20, display: 'flex', justifyContent: 'flex-end' }}>
                     <Botao $variacao="primario" onClick={salvar} disabled={salvando}>
-                        <FiSave /> {salvando ? 'Criando...' : 'Criar Usuário'}
+                        <FiSave /> {salvando ? 'Criando...' : 'Criar Professor(a)'}
                     </Botao>
                 </div>
             </Card>

@@ -45,12 +45,12 @@ export function EditarUsuario() {
                 setPapel(u.papel)
                 setAtivo(u.ativo)
             } else {
-                toast.error('Usuário não encontrado')
+                toast.error('Professor(a) não encontrado')
                 navegar('/admin/usuarios')
             }
         } catch (e) {
             console.error(e)
-            toast.error('Erro ao carregar usuário')
+            toast.error('Erro ao carregar professor(a)')
         } finally {
             setCarregando(false)
         }
@@ -71,11 +71,11 @@ export function EditarUsuario() {
                 papel,
                 ativo
             })
-            toast.success('Usuário atualizado com sucesso!')
+            toast.success('Professor(a) atualizado com sucesso!')
             navegar('/admin/usuarios')
         } catch (e) {
             console.error(e)
-            toast.error('Erro ao atualizar usuário')
+            toast.error('Erro ao atualizar professor(a)')
         } finally {
             setSalvando(false)
         }
@@ -94,7 +94,7 @@ export function EditarUsuario() {
             </BotaoVoltar>
 
             <Card style={{ marginTop: 10 }}>
-                <Titulo style={{ marginBottom: 20 }}>Editar Usuário</Titulo>
+                <Titulo style={{ marginBottom: 20 }}>Editar Professor(a)</Titulo>
 
                 <div style={{ marginBottom: 20, fontSize: 13, color: '#64748b' }}>
                     UID: <strong>{uid}</strong>
@@ -123,7 +123,7 @@ export function EditarUsuario() {
                         value={papel}
                         onChange={(v) => setPapel(v as PapelUsuario)}
                         options={[
-                            { value: 'usuario', label: 'Usuário' },
+                            { value: 'usuario', label: 'Professor(a)' },
                             { value: 'administrador', label: 'Administrador' }
                         ]}
                     />

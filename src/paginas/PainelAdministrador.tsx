@@ -28,9 +28,9 @@ export function PainelAdministrador() {
                             <FiUsers />
                         </div>
                         <div>
-                            <div style={{ fontSize: 18, fontWeight: 600, color: '#1e293b' }}>Gestão de Usuários</div>
+                            <div style={{ fontSize: 18, fontWeight: 600, color: '#1e293b' }}>Gestão de Professores</div>
                             <div style={{ fontSize: 14, color: '#64748b', marginTop: 4 }}>
-                                Gerencie acessos, crie novos usuários e edite permissões.
+                                Gerencie acessos, crie novos professores e edite permissões.
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@ export function PainelAdministrador() {
 
                     <Link to="/admin/usuarios">
                         <Botao $variacao="primario" style={{ width: '100%', justifyContent: 'center' }}>
-                            <FiPlus /> Gerenciar Usuários
+                            <FiPlus /> Gerenciar Professores
                         </Botao>
                     </Link>
                 </Card>

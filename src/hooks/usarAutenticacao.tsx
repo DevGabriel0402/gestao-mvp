@@ -37,7 +37,7 @@ export function ProvedorAutenticacao({ children }: { children: React.ReactNode }
 
                 // 3. Validação: Usuário existe?
                 if (!usuario) {
-                    toast.error('Usuário não cadastrado. Solicite acesso ao administrador.')
+                    toast.error('Professor(a) não cadastrado(a). Solicite acesso ao administrador.')
                     await sair()
                     setUsuarioSistema(null)
                     setCarregando(false)
@@ -46,7 +46,7 @@ export function ProvedorAutenticacao({ children }: { children: React.ReactNode }
 
                 // 4. Validação: Usuário está ativo?
                 if (!usuario.ativo) {
-                    toast.error('Usuário desativado. Fale com o administrador.')
+                    toast.error('Professor(a) desativado(a). Fale com o administrador.')
                     await sair()
                     setUsuarioSistema(null)
                     setCarregando(false)
