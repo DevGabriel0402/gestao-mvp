@@ -34,14 +34,21 @@ export function PainelAdministrador() {
 
     async function baixarRelatorioProfessores() {
         if (!usuarioSistema) return
+
+        const win = window.open('', '_blank')
+        if (win) {
+            win.document.write('Gerando relatório... aguarde.')
+        }
+
         setGerandoRelatorio(true)
         try {
             const users = await listarUsuariosSistema()
-            gerarRelatorioProfessores(users)
+            gerarRelatorioProfessores(users, win)
             toast.success('Relatório gerado com sucesso!')
         } catch (error) {
             console.error(error)
             toast.error('Erro ao gerar relatório.')
+            if (win) win.close()
         } finally {
             setGerandoRelatorio(false)
         }

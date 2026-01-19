@@ -18,7 +18,7 @@ function toCamelCase(str: string) {
         .join(' ')
 }
 
-export function gerarRelatorioProfessores(usuarios: UsuarioSistema[]) {
+export function gerarRelatorioProfessores(usuarios: UsuarioSistema[], win: Window | null = null) {
     const doc = new jsPDF() as jsPDFWithAutoTable
 
     // Título
@@ -52,11 +52,15 @@ export function gerarRelatorioProfessores(usuarios: UsuarioSistema[]) {
     // Melhor abrir em nova janela para o usuário salvar/compartilhar.
     const blob = doc.output('blob')
     const url = URL.createObjectURL(blob)
-    window.open(url, '_blank')
+    if (win) {
+        win.location.href = url
+    } else {
+        window.open(url, '_blank')
+    }
     // doc.save(`relatorio_professores_${new Date().toISOString().split('T')[0]}.pdf`)
 }
 
-export function gerarRelatorioAlunos(alunos: Aluno[]) {
+export function gerarRelatorioAlunos(alunos: Aluno[], win: Window | null = null) {
     const doc = new jsPDF() as jsPDFWithAutoTable
 
     // Título
@@ -98,14 +102,19 @@ export function gerarRelatorioAlunos(alunos: Aluno[]) {
         head: [['Nome', 'Idade/Nasc', 'Responsável', 'Telefone', 'Oficinas']],
         body: dados,
         startY: 42,
-        theme: 'striped',
-        headStyles: { fillColor: [34, 197, 94] }, // Verde
+        theme: 'grid',
+        headStyles: { fillColor: [59, 130, 246] },
+        alternateRowStyles: { fillColor: [241, 245, 249] }
     })
 
     // Salvar
     // Salvar
     const blob = doc.output('blob')
     const url = URL.createObjectURL(blob)
-    window.open(url, '_blank')
+    if (win) {
+        win.location.href = url
+    } else {
+        window.open(url, '_blank')
+    }
     // doc.save(`relatorio_alunos_${new Date().toISOString().split('T')[0]}.pdf`)
 }

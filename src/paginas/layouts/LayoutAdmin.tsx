@@ -13,14 +13,22 @@ export function LayoutAdmin() {
 
     async function baixarRelatorio() {
         if (gerando) return
+
+        // Abrir janela antes do async para evitar bloqueio de popup
+        const win = window.open('', '_blank')
+        if (win) {
+            win.document.write('Gerando relatório... aguarde.')
+        }
+
         setGerando(true)
         try {
             const users = await listarUsuariosSistema()
-            gerarRelatorioProfessores(users)
+            gerarRelatorioProfessores(users, win)
             toast.success('Relatório baixado!')
         } catch (err) {
             console.error(err)
             toast.error('Erro ao gerar relatório.')
+            if (win) win.close()
         } finally {
             setGerando(false)
         }

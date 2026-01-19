@@ -16,14 +16,21 @@ export function LayoutApp() {
 
     async function baixarRelatorio() {
         if (gerando || !usuarioSistema?.uid) return
+
+        const win = window.open('', '_blank')
+        if (win) {
+            win.document.write('Gerando relatório... aguarde.')
+        }
+
         setGerando(true)
         try {
             const alunos = await listarAlunos(usuarioSistema.uid) as Aluno[]
-            gerarRelatorioAlunos(alunos)
+            gerarRelatorioAlunos(alunos, win)
             toast.success('Relatório baixado!')
         } catch (err) {
             console.error(err)
             toast.error('Erro ao gerar relatório.')
+            if (win) win.close()
         } finally {
             setGerando(false)
         }

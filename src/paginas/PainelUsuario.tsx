@@ -54,14 +54,21 @@ export function PainelUsuario() {
 
     async function baixarRelatorioAlunos() {
         if (!usuarioSistema?.uid) return
+
+        const win = window.open('', '_blank')
+        if (win) {
+            win.document.write('Gerando relatório... aguarde.')
+        }
+
         setGerandoRelatorio(true)
         try {
             const alunos = await listarAlunos(usuarioSistema.uid) as Aluno[]
-            gerarRelatorioAlunos(alunos)
+            gerarRelatorioAlunos(alunos, win)
             toast.success('Relatório de alunos gerado!')
         } catch (error) {
             console.error(error)
             toast.error('Erro ao gerar relatório.')
+            if (win) win.close()
         } finally {
             setGerandoRelatorio(false)
         }
