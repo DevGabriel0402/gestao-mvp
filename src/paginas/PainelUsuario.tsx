@@ -20,7 +20,6 @@ import type { Aluno } from '../servicos/alunos.servico'
 import { gerarRelatorioAlunos } from '../servicos/relatorios.servico'
 import { toast } from 'react-toastify'
 import { GraficosProfessor } from '../componentes/GraficosProfessor'
-import { BarraNavegacaoMobile } from '../componentes/BarraNavegacaoMobile'
 
 const DesktopOnly = styled.div`
   display: block;
@@ -34,6 +33,12 @@ const MobileOnly = styled.div`
   @media (max-width: 768px) {
     display: block;
   }
+`
+
+const NavigationDesktopOnly = styled.div`
+    @media (max-width: 768px) {
+        display: none;
+    }
 `
 
 export function PainelUsuario() {
@@ -115,109 +120,103 @@ export function PainelUsuario() {
                 </div>
             )}
 
-            <Linha>
-                <Card style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app/alunos')}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{
-                            background: 'rgba(34, 197, 94, 0.1)',
-                            color: '#22c55e',
-                            width: 56,
-                            height: 56,
-                            borderRadius: 12,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 28
-                        }}>
-                            <FiUser />
+            {/* Apenas Desktop: Cards de Navegação */}
+            <NavigationDesktopOnly>
+                <Linha>
+                    <Card style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app/alunos')}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                            <div style={{
+                                background: 'rgba(34, 197, 94, 0.1)',
+                                color: '#22c55e',
+                                width: 56,
+                                height: 56,
+                                borderRadius: 12,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 28
+                            }}>
+                                <FiUser />
+                            </div>
+                            <div>
+                                <Titulo style={{ fontSize: 18 }}>Meus Alunos</Titulo>
+                                <Subtitulo>Adicione e gerencie alunos</Subtitulo>
+                            </div>
                         </div>
-                        <div>
-                            <Titulo style={{ fontSize: 18 }}>Meus Alunos</Titulo>
-                            <Subtitulo>Adicione e gerencie alunos</Subtitulo>
-                        </div>
-                    </div>
-                </Card>
+                    </Card>
 
-                <Card style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app/configuracoes/oficinas')}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{
-                            background: 'rgba(59, 130, 246, 0.1)',
-                            color: '#3b82f6',
-                            width: 56,
-                            height: 56,
-                            borderRadius: 12,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 28
-                        }}>
-                            <MdOutlineSportsVolleyball style={{ transform: 'rotate(-20deg)' }} />
+                    <Card style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app/configuracoes/oficinas')}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                            <div style={{
+                                background: 'rgba(59, 130, 246, 0.1)',
+                                color: '#3b82f6',
+                                width: 56,
+                                height: 56,
+                                borderRadius: 12,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 28
+                            }}>
+                                <MdOutlineSportsVolleyball style={{ transform: 'rotate(-20deg)' }} />
+                            </div>
+                            <div>
+                                <Titulo style={{ fontSize: 18 }}>Oficinas</Titulo>
+                                <Subtitulo>Gerencie as oficinas</Subtitulo>
+                            </div>
                         </div>
-                        <div>
-                            <Titulo style={{ fontSize: 18 }}>Oficinas</Titulo>
-                            <Subtitulo>Gerencie as oficinas</Subtitulo>
-                        </div>
-                    </div>
-                </Card>
+                    </Card>
 
-                <Card style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app/configuracoes/geral')}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{
-                            background: 'rgba(234, 88, 12, 0.1)', // Laranja suave
-                            color: '#ea580c',
-                            width: 56,
-                            height: 56,
-                            borderRadius: 12,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 28
-                        }}>
-                            <FiSettings />
+                    <Card style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app/configuracoes/geral')}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                            <div style={{
+                                background: 'rgba(234, 88, 12, 0.1)', // Laranja suave
+                                color: '#ea580c',
+                                width: 56,
+                                height: 56,
+                                borderRadius: 12,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 28
+                            }}>
+                                <FiSettings />
+                            </div>
+                            <div>
+                                <Titulo style={{ fontSize: 18 }}>Geral</Titulo>
+                                <Subtitulo>Níveis e dados do projeto</Subtitulo>
+                            </div>
                         </div>
-                        <div>
-                            <Titulo style={{ fontSize: 18 }}>Geral</Titulo>
-                            <Subtitulo>Níveis e dados do projeto</Subtitulo>
-                        </div>
-                    </div>
-                </Card>
+                    </Card>
 
-                <Card
-                    style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
-                    onClick={!gerandoRelatorio ? baixarRelatorioAlunos : undefined}
-                >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{
-                            background: '#fee2e2',
-                            color: '#dc2626',
-                            width: 56,
-                            height: 56,
-                            borderRadius: 12,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 28
-                        }}>
-                            <FaFilePdf />
+                    <Card
+                        style={{ flex: 1, minWidth: 280, cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+                        onClick={!gerandoRelatorio ? baixarRelatorioAlunos : undefined}
+                    >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                            <div style={{
+                                background: '#fee2e2',
+                                color: '#dc2626',
+                                width: 56,
+                                height: 56,
+                                borderRadius: 12,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 28
+                            }}>
+                                <FaFilePdf />
+                            </div>
+                            <div>
+                                <Titulo style={{ fontSize: 18 }}>Relatório</Titulo>
+                                <Subtitulo>{gerandoRelatorio ? 'Gerando...' : 'Baixar PDF de Alunos'}</Subtitulo>
+                            </div>
                         </div>
-                        <div>
-                            <Titulo style={{ fontSize: 18 }}>Relatório</Titulo>
-                            <Subtitulo>{gerandoRelatorio ? 'Gerando...' : 'Baixar PDF de Alunos'}</Subtitulo>
-                        </div>
-                    </div>
-                </Card>
-
-
-            </Linha>
+                    </Card>
+                </Linha>
+            </NavigationDesktopOnly>
 
             <GraficosProfessor />
-
-            <BarraNavegacaoMobile itens={[
-                { label: 'Meus Alunos', icone: FiUser, acao: '/app/alunos' },
-                { label: 'Oficinas', icone: MdOutlineSportsVolleyball, acao: '/app/configuracoes/oficinas' },
-                { label: 'Geral', icone: FiSettings, acao: '/app/configuracoes/geral' },
-                { label: 'Relatório', icone: FaFilePdf, acao: baixarRelatorioAlunos }
-            ]} />
         </ContainerPagina >
     )
 }

@@ -48,61 +48,61 @@ const ItemNavegacao = styled.button<{ $ativo?: boolean }>`
   }
 
   svg {
-    font-size: 22px;
+    font-size: 28px;
   }
 
   span {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
   }
 `
 
 export type ItemBarra = {
-    label: string
-    icone: IconType
-    acao: string | (() => void)
-    caminhoAtivo?: string // Para marcar ativo se for rota
+  label: string
+  icone: IconType
+  acao: string | (() => void)
+  caminhoAtivo?: string // Para marcar ativo se for rota
 }
 
 interface Props {
-    itens: ItemBarra[]
+  itens: ItemBarra[]
 }
 
 export function BarraNavegacaoMobile({ itens }: Props) {
-    const navegar = useNavigate()
-    const location = useLocation()
+  const navegar = useNavigate()
+  const location = useLocation()
 
-    function handleClick(item: ItemBarra) {
-        if (typeof item.acao === 'string') {
-            navegar(item.acao)
-        } else {
-            item.acao()
-        }
+  function handleClick(item: ItemBarra) {
+    if (typeof item.acao === 'string') {
+      navegar(item.acao)
+    } else {
+      item.acao()
     }
+  }
 
-    return (
-        <>
-            <Spacer />
+  return (
+    <>
+      <Spacer />
 
-            <ContainerBarra>
-                {itens.map((item, index) => {
-                    // Verifica se está ativo
-                    const ehAtivo = typeof item.acao === 'string'
-                        ? location.pathname === item.acao || location.pathname === item.caminhoAtivo
-                        : false
+      <ContainerBarra>
+        {itens.map((item, index) => {
+          // Verifica se está ativo
+          const ehAtivo = typeof item.acao === 'string'
+            ? location.pathname === item.acao || location.pathname === item.caminhoAtivo
+            : false
 
-                    return (
-                        <ItemNavegacao
-                            key={index}
-                            onClick={() => handleClick(item)}
-                            $ativo={ehAtivo}
-                        >
-                            <item.icone />
-                            <span>{item.label}</span>
-                        </ItemNavegacao>
-                    )
-                })}
-            </ContainerBarra>
-        </>
-    )
+          return (
+            <ItemNavegacao
+              key={index}
+              onClick={() => handleClick(item)}
+              $ativo={ehAtivo}
+            >
+              <item.icone />
+              <span>{item.label}</span>
+            </ItemNavegacao>
+          )
+        })}
+      </ContainerBarra>
+    </>
+  )
 }

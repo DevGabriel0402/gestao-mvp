@@ -13,6 +13,8 @@ import { CriarUsuario } from '../paginas/admin/CriarUsuario'
 import { EditarUsuario } from '../paginas/admin/EditarUsuario'
 import { RelatorioOficinas } from '../paginas/relatorios/RelatorioOficinas'
 import { RecuperarSenha } from '../paginas/RecuperarSenha'
+import { LayoutAdmin } from '../paginas/layouts/LayoutAdmin'
+import { LayoutApp } from '../paginas/layouts/LayoutApp'
 
 export function Rotas() {
     return (
@@ -23,104 +25,32 @@ export function Rotas() {
             {/* 🔑 ROTA PRINCIPAL (REDIRECIONAMENTO) */}
             <Route path="/" element={<Navigate to="/login" replace />} />
 
-            {/* 🛡️ PAINEL ADMINISTRADOR */}
-            <Route
-                path="/admin"
-                element={
-                    <RotaProtegida papeisPermitidos={['administrador']}>
-                        <PainelAdministrador />
-                    </RotaProtegida>
-                }
-            />
-            <Route
-                path="/admin/usuarios"
-                element={
-                    <RotaProtegida papeisPermitidos={['administrador']}>
-                        <ListaUsuarios />
-                    </RotaProtegida>
-                }
-            />
-            <Route
-                path="/admin/usuarios/novo"
-                element={
-                    <RotaProtegida papeisPermitidos={['administrador']}>
-                        <CriarUsuario />
-                    </RotaProtegida>
-                }
-            />
-            <Route
-                path="/admin/usuarios/:uid/editar"
-                element={
-                    <RotaProtegida papeisPermitidos={['administrador']}>
-                        <EditarUsuario />
-                    </RotaProtegida>
-                }
-            />
+            {/* 🛡️ PAINEL ADMINISTRADOR (LAYOUT COM BOTTOM BAR) */}
+            <Route element={
+                <RotaProtegida papeisPermitidos={['administrador']}>
+                    <LayoutAdmin />
+                </RotaProtegida>
+            }>
+                <Route path="/admin" element={<PainelAdministrador />} />
+                <Route path="/admin/usuarios" element={<ListaUsuarios />} />
+                <Route path="/admin/usuarios/novo" element={<CriarUsuario />} />
+                <Route path="/admin/usuarios/:uid/editar" element={<EditarUsuario />} />
+            </Route>
 
-
-            {/* 📱 PAINEL USUÁRIO (ALUNOS E OFICINAS) */}
-            <Route
-                path="/app"
-                element={
-                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
-                        <PainelUsuario />
-                    </RotaProtegida>
-                }
-            />
-
-            <Route
-                path="/app/alunos/novo"
-                element={
-                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
-                        <CadastroAluno />
-                    </RotaProtegida>
-                }
-            />
-
-            <Route
-                path="/app/alunos/:id/editar"
-                element={
-                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
-                        <CadastroAluno />
-                    </RotaProtegida>
-                }
-            />
-            <Route
-                path="/app/alunos"
-                element={
-                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
-                        <ListaAlunos />
-                    </RotaProtegida>
-                }
-            />
-
-            <Route
-                path="/app/relatorios/oficinas"
-                element={
-                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
-                        <RelatorioOficinas />
-                    </RotaProtegida>
-                }
-            />
-
-            {/* ⚙️ CONFIGURAÇÕES */}
-            <Route
-                path="/app/configuracoes/geral"
-                element={
-                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
-                        <ConfiguracoesGerais />
-                    </RotaProtegida>
-                }
-            />
-
-            <Route
-                path="/app/configuracoes/oficinas"
-                element={
-                    <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
-                        <ConfiguracoesOficinas />
-                    </RotaProtegida>
-                }
-            />
+            {/* 📱 PAINEL USUÁRIO (LAYOUT COM BOTTOM BAR) */}
+            <Route element={
+                <RotaProtegida papeisPermitidos={['professor', 'administrador']}>
+                    <LayoutApp />
+                </RotaProtegida>
+            }>
+                <Route path="/app" element={<PainelUsuario />} />
+                <Route path="/app/alunos/novo" element={<CadastroAluno />} />
+                <Route path="/app/alunos/:id/editar" element={<CadastroAluno />} />
+                <Route path="/app/alunos" element={<ListaAlunos />} />
+                <Route path="/app/relatorios/oficinas" element={<RelatorioOficinas />} />
+                <Route path="/app/configuracoes/geral" element={<ConfiguracoesGerais />} />
+                <Route path="/app/configuracoes/oficinas" element={<ConfiguracoesOficinas />} />
+            </Route>
 
             <Route path="*" element={<NaoEncontrado />} />
         </Routes>

@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import {
     FiUsers,
-    FiLogOut,
-
+    FiPlus,
 } from 'react-icons/fi'
 import { FaFilePdf } from 'react-icons/fa6'
+import styled from 'styled-components'
 import {
     Botao,
     Card,
@@ -13,29 +13,31 @@ import {
     Subtitulo,
     Grid
 } from '../estilos/componentes'
-import { sair } from '../servicos/autenticacao.servico'
 import { listarUsuariosSistema } from '../servicos/usuarios_admin.servico'
 import { gerarRelatorioProfessores } from '../servicos/relatorios.servico'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
 import { MdOutlineSportsVolleyball } from 'react-icons/md'
 import { GraficosAdmin } from '../componentes/GraficosAdmin'
-import { BarraNavegacaoMobile } from '../componentes/BarraNavegacaoMobile'
+import { usarAutenticacao } from '../hooks/usarAutenticacao'
+
+const GridDeNavegacao = styled(Grid)`
+    @media (max-width: 768px) {
+        display: none;
+    }
+`
 
 export function PainelAdministrador() {
     const navegar = useNavigate()
+    const { usuarioSistema } = usarAutenticacao()
     const [gerandoRelatorio, setGerandoRelatorio] = useState(false)
 
-    async function fazerLogout() {
-        await sair()
-        navegar('/login', { replace: true })
-    }
-
     async function baixarRelatorioProfessores() {
+        if (!usuarioSistema) return
         setGerandoRelatorio(true)
         try {
-            const usuarios = await listarUsuariosSistema()
-            gerarRelatorioProfessores(usuarios)
+            const users = await listarUsuariosSistema()
+            gerarRelatorioProfessores(users)
             toast.success('Relatório gerado com sucesso!')
         } catch (error) {
             console.error(error)
@@ -49,67 +51,83 @@ export function PainelAdministrador() {
         <ContainerPagina>
             <div style={{ marginBottom: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                    <Titulo style={{ margin: 0 }}>Painel Administrativo</Titulo>
-                    <Subtitulo style={{ marginTop: 4 }}>Gerencie professores e acessos</Subtitulo>
+                    <Titulo>Painel do Administrador</Titulo>
+                    <Subtitulo>Gerencie professores e usuários do sistema.</Subtitulo>
                 </div>
-                <Botao onClick={fazerLogout} style={{ padding: '6px 12px', fontSize: 13 }}>
-                    <FiLogOut /> Sair
+                <Botao onClick={() => navegar('/admin/usuarios/novo')} $variacao="primario">
+                    <FiPlus /> Novo Professor
                 </Botao>
             </div>
 
             <GraficosAdmin />
 
-            <Grid>
-                <Card style={{ cursor: 'pointer', display: 'flex', gap: 16, alignItems: 'center' }} onClick={() => navegar('/admin/usuarios')}>
-                    <div style={{
-                        width: 50, height: 50, borderRadius: 12,
-                        background: '#e0f2fe', color: '#0284c7',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24
-                    }}>
-                        <FiUsers />
-                    </div>
-                    <div>
-                        <Titulo style={{ fontSize: 18 }}>Professores</Titulo>
-                        <Subtitulo>Gerenciar acessos e perfis</Subtitulo>
-                    </div>
-                </Card>
-
-                <Card style={{ cursor: 'pointer', display: 'flex', gap: 16, alignItems: 'center' }} onClick={() => navegar('/app')}>
-                    <div style={{
-                        width: 50, height: 50, borderRadius: 12,
-                        background: '#f1f5f9', color: '#64748b',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24
-                    }}>
-                        <MdOutlineSportsVolleyball />
-                    </div>
-                    <div>
-                        <Titulo style={{ fontSize: 18 }}>Visão do Professor</Titulo>
-                        <Subtitulo>Acessar painel do app</Subtitulo>
+            <GridDeNavegacao>
+                <Card style={{ cursor: 'pointer', minHeight: 160, display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/admin/usuarios')}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{
+                            background: 'rgba(56, 189, 248, 0.1)',
+                            color: '#38bdf8',
+                            width: 56,
+                            height: 56,
+                            borderRadius: 12,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 28
+                        }}>
+                            <FiUsers />
+                        </div>
+                        <div>
+                            <Titulo style={{ fontSize: 20 }}>Professores e Usuários</Titulo>
+                            <Subtitulo>Gerenciar acessos ao sistema</Subtitulo>
+                        </div>
                     </div>
                 </Card>
 
-                <Card
-                    style={{ cursor: gerandoRelatorio ? 'wait' : 'pointer', display: 'flex', gap: 16, alignItems: 'center' }}
-                    onClick={!gerandoRelatorio ? baixarRelatorioProfessores : undefined}
-                >
-                    <div style={{
-                        width: 50, height: 50, borderRadius: 12,
-                        background: '#fee2e2', color: '#dc2626',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24
-                    }}>
-                        <FaFilePdf />
-                    </div>
-                    <div>
-                        <Titulo style={{ fontSize: 18 }}>Relatório PDF</Titulo>
-                        <Subtitulo>{gerandoRelatorio ? 'Gerando...' : 'Baixar lista de professores'}</Subtitulo>
+                <Card style={{ cursor: 'pointer', minHeight: 160, display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={() => navegar('/app')}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{
+                            background: 'rgba(16, 185, 129, 0.1)',
+                            color: '#10b981',
+                            width: 56,
+                            height: 56,
+                            borderRadius: 12,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 28
+                        }}>
+                            <MdOutlineSportsVolleyball />
+                        </div>
+                        <div>
+                            <Titulo style={{ fontSize: 20 }}>Visão do Aplicativo</Titulo>
+                            <Subtitulo>Acessar como professor</Subtitulo>
+                        </div>
                     </div>
                 </Card>
-            </Grid>
-            <BarraNavegacaoMobile itens={[
-                { label: 'Professores', icone: FiUsers, acao: '/admin/usuarios' },
-                { label: 'Visão App', icone: MdOutlineSportsVolleyball, acao: '/app' },
-                { label: 'Relatório', icone: FaFilePdf, acao: baixarRelatorioProfessores }
-            ]} />
-        </ContainerPagina >
+
+                <Card style={{ cursor: 'pointer', minHeight: 160, display: 'flex', flexDirection: 'column', justifyContent: 'center' }} onClick={!gerandoRelatorio ? baixarRelatorioProfessores : undefined}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{
+                            background: 'rgba(244, 63, 94, 0.1)',
+                            color: '#f43f5e',
+                            width: 56,
+                            height: 56,
+                            borderRadius: 12,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 28
+                        }}>
+                            <FaFilePdf />
+                        </div>
+                        <div>
+                            <Titulo style={{ fontSize: 20 }}>Relatório PDF</Titulo>
+                            <Subtitulo>{gerandoRelatorio ? 'Gerando...' : 'Baixar lista de professores'}</Subtitulo>
+                        </div>
+                    </div>
+                </Card>
+            </GridDeNavegacao>
+        </ContainerPagina>
     )
 }
